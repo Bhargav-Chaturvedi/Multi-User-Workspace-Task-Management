@@ -1,17 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const {
-  inviteUser,
+  createUser,
   removeUser,
   updateUserRole,
   getUserProfile,
-  getUserWorkspaces,
 } = require("../controllers/userController");
 
-router.post("/invite", inviteUser);
-router.delete("/:Id", removeUser);
-router.patch("/:Id/role", updateUserRole);
-router.get("/profile", getUserProfile);
-router.get("/:Id/workspaces", getUserWorkspaces);
+router.post("/create", createUser); // admin ,owner only
+router.delete("/:id", removeUser); //  admin ,owner only
+router.patch("/:id/role", updateUserRole); // admin ,owner only
+router.get("/profile", getUserProfile); // all
 
 module.exports = router;

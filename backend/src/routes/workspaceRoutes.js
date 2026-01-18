@@ -8,8 +8,8 @@ const {
 } = require("../controllers/workspaceController");
 
 router.post("/", createWorkspace);
-router.get("/:Id", workspaceInfo);
-router.delete("/:Id", deleteWorkspace);
-router.patch("/:Id/transfer-ownership", transferOwnership);
+router.get("/:id", workspaceInfo);
+router.delete("/:id", deleteWorkspace);
+router.patch("/:id/transfer-ownership", transferOwnership);
 
 module.exports = router;
