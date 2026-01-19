@@ -6,7 +6,8 @@ const {
   deleteWorkspace,
   transferOwnership,
 } = require("../controllers/workspaceController");
-
+const { validateToken } = require("../middlewares/validateTokenHandler");
+app.use(validateToken);
 router.post("/", createWorkspace);
 router.get("/:id", workspaceInfo);
 router.delete("/:id", deleteWorkspace);

@@ -19,13 +19,12 @@ app.use("/api/users", require("./src/routes/userRoutes"));
 app.use("/api/workspaces", require("./src/routes/workspaceRoutes"));
 app.use("/api/tasks", require("./src/routes/taskRoutes"));
 
-// Error Handling Middleware
-app.use(errorHandler);
-
 // health check
 app.get("/", (req, res) => {
   res.send("Task Manager API running");
 });
+// Error Handling Middleware
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

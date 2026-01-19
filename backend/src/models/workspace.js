@@ -3,7 +3,7 @@ const workspaceSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Please add a username"],
+      required: [true, "Please add a Name"],
     },
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
