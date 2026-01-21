@@ -14,11 +14,6 @@ const taskSchema = new mongoose.Schema(
       enum: ["todo", "in-progress", "done"],
       default: "todo",
     },
-    workspaceId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Workspace",
-      required: true,
-    },
     assignedTo: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -27,6 +22,11 @@ const taskSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
+    },
+    workspaceId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Workspace",
       required: true,
     },
   },

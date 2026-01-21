@@ -1,5 +1,11 @@
 const adminOrOwner = (req, res, next) => {
-  const role = req.user.role;
+  // safety check
+  if (!req.user || !req.user.role) {
+    res.status(401);
+    throw new Error("Unauthorized");
+  }
+
+  const { role } = req.user;
 
   if (role === "owner" || role === "admin") {
     return next();

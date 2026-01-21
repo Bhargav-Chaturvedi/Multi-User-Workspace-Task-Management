@@ -69,7 +69,7 @@ const removeUser = asyncHandler(async (req, res) => {
 // @access private - Only Admin , Owner
 const updateUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
-  const { username, email, phone } = req.body;
+  const { username, email, phone, password } = req.body;
 
   // find user
   const user = await User.findById(userId);
@@ -111,6 +111,10 @@ const updateUser = asyncHandler(async (req, res) => {
   if (username) user.username = username;
   if (email) user.email = email;
   if (phone) user.phone = phone;
+  if (password) {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+  }
 
   await user.save();
 

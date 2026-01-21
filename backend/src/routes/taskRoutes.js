@@ -8,10 +8,12 @@ const {
   deleteTask,
 } = require("../controllers/taskController");
 const { validateToken } = require("../middlewares/validateTokenHandler");
-app.use(validateToken);
-router.route("/").post(createTask).get(listTask);
+const { adminOrOwner } = require("../middlewares/roleMiddleware");
+router.use(validateToken);
+router.post("/", adminOrOwner, createTask);
+router.get("/", listTask);
 router.get("/:id", singleTask);
 router.patch("/:id/status", updateTaskStatus);
-router.delete("/:id", deleteTask);
+router.delete("/:id", adminOrOwner, deleteTask);
 
 module.exports = router;

@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const {
-  createWorkspace,
   workspaceInfo,
   deleteWorkspace,
   transferOwnership,
 } = require("../controllers/workspaceController");
 const { validateToken } = require("../middlewares/validateTokenHandler");
-app.use(validateToken);
-router.post("/", createWorkspace);
+
+router.use(validateToken);
 router.get("/:id", workspaceInfo);
 router.delete("/:id", deleteWorkspace);
 router.patch("/:id/transfer-ownership", transferOwnership);

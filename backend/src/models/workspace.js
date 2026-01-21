@@ -7,19 +7,11 @@ const workspaceSchema = mongoose.Schema(
     },
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: [true],
-    },
-    createdAt: {
-      type: String,
-      required: [true],
-    },
-    updatedAt: {
-      type: String,
-      required: [true],
+      ref: "User",
     },
   },
   {
     timestamps: true,
   },
 );
-module.exports = mongoose.model("User", workspaceSchema);
+module.exports = mongoose.model("Workspace", workspaceSchema);
