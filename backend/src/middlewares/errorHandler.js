@@ -41,6 +41,13 @@ const errorHandler = (err, req, res, next) => {
 
     default:
       console.log("No error found ✔️");
+      // Fallback for unhandled errors but with 200 or other status codes
+      // Ideally should not happen if constants cover all errors
+      res.status(statusCode !== 200 ? statusCode : 500).json({
+        title: "UNHANDLED ERROR",
+        message: err.message,
+        stackTrace: err.stack
+      });
       break;
   }
 };

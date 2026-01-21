@@ -95,7 +95,7 @@ const loginAll = asyncHandler(async (req, res) => {
       workspaceId: owner.workspaceId,
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "15m" },
+    { expiresIn: "25m" },
   );
   res.status(200).json({
     message: "Owner logged in successfully",

@@ -11,7 +11,7 @@ const validateToken = asyncHandler(async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
       // 🔥 attach user to request
-      req.user = decoded.user;
+      req.user = decoded;
 
       next();
     } catch (err) {

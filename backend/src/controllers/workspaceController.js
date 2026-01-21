@@ -18,7 +18,7 @@ const workspaceInfo = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Workspace not found");
   }
-
+  
   if (workspace._id.toString() !== req.user.workspaceId.toString()) {
     res.status(403);
     throw new Error("Not authorized");
