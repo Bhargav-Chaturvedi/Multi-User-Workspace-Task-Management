@@ -47,7 +47,7 @@ const createUser = asyncHandler(async (req, res) => {
 // @routes DELETE /api/users/:id
 // @access private - Only Admin , Owner
 const removeUser = asyncHandler(async (req, res) => {
-  const userId = req.param.id;
+  const userId = req.params.id;
   const user = await User.findById(userId);
   if (!user) {
     res.status(404);
@@ -61,7 +61,7 @@ const removeUser = asyncHandler(async (req, res) => {
     res.status(403);
     throw new Error("not allowed");
   }
-  await User.deleteOne();
+  await user.deleteOne();
   res.status(200).json({ message: "User removed successfully" });
 });
 // @desc remove a User
@@ -69,7 +69,7 @@ const removeUser = asyncHandler(async (req, res) => {
 // @access private - Only Admin , Owner
 const updateUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
-  const { username, email, phone, password } = req.body;
+  const { username, email, phone, password, role } = req.body;
 
   // find user
   const user = await User.findById(userId);
@@ -88,6 +88,12 @@ const updateUser = asyncHandler(async (req, res) => {
   if (user.role === "owner" && req.user.role !== "owner") {
     res.status(403);
     throw new Error("Only owner can update owner");
+  }
+
+  // prevent setting role to owner
+  if (role === "owner") {
+    res.status(403);
+    throw new Error("Cannot set role to owner");
   }
 
   // uniqueness checks
@@ -111,6 +117,7 @@ const updateUser = asyncHandler(async (req, res) => {
   if (username) user.username = username;
   if (email) user.email = email;
   if (phone) user.phone = phone;
+  if (role) user.role = role;
   if (password) {
     const hashedPassword = await bcrypt.hash(password, 10);
     user.password = hashedPassword;

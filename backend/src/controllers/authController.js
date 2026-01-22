@@ -105,6 +105,7 @@ const loginAll = asyncHandler(async (req, res) => {
       username: owner.username,
       email: owner.email,
       role: owner.role,
+      workspaceId: owner.workspaceId,
     },
   });
 });
