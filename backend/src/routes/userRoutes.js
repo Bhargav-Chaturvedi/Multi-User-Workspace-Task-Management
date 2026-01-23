@@ -13,7 +13,7 @@ const { validateToken } = require("../middlewares/validateTokenHandler");
 router.use(validateToken);
 router.post("/create", adminOrOwner, createUser); // admin ,owner only
 router.delete("/:id", adminOrOwner, removeUser); //  admin ,owner only
-router.patch("/:id/role", adminOrOwner, updateUser); //  admin ,owner only
+router.patch("/:id", adminOrOwner, updateUser); //  admin ,owner only - full user update
 router.get("/profile", getUserProfile); // all
 
 module.exports = router;

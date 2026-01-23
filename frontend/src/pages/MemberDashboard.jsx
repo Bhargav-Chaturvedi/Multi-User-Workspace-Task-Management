@@ -37,15 +37,11 @@ const MemberDashboard = () => {
     const fetchTasks = async () => {
         try {
             setLoadingTasks(true);
-            // Member gets only assigned tasks through the /tasks/:id endpoint
-            // We need to fetch tasks assigned to current user
-            // Since there's no direct endpoint for member tasks, we'll use what's available
-            // Based on backend, member can access their assigned tasks via GET /tasks/:id
-            // But there's no list endpoint for members - they get 403 on GET /tasks
-            // So we'll show a message about this limitation
-            setTasks([]);
+            // Backend now returns only assigned tasks for members
+            const response = await taskAPI.getTasks();
+            setTasks(response.data);
         } catch (err) {
-            // Expected - member can't access GET /tasks
+            setError(err.response?.data?.message || 'Failed to fetch tasks');
             setTasks([]);
         } finally {
             setLoadingTasks(false);
@@ -162,12 +158,15 @@ const MemberDashboard = () => {
                     </h2>
 
                     {/* Info Banner */}
-                    <div className="bg-yellow-500/20 border border-yellow-500/50 rounded-lg p-4 mb-4">
-                        <div className="flex items-center gap-2 text-yellow-200">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="bg-blue-500/20 border border-blue-500/50 rounded-lg p-4 mb-4">
+                        <div className="flex items-center gap-2 text-blue-200">
+                            <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span>As a member, you can only view and update the status of tasks assigned to you. Ask your admin to assign tasks to you.</span>
+                            <span>
+                                As a member, you can only view and update the status of tasks assigned to you.
+                                {tasks.length === 0 && ' Ask your admin to assign tasks to you.'}
+                            </span>
                         </div>
                     </div>
 

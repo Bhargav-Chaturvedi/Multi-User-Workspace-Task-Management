@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001';
+// Use environment variable in production, fallback to localhost for development
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 const api = axios.create({
     baseURL: API_BASE_URL,
@@ -51,7 +52,8 @@ export const authAPI = {
 export const userAPI = {
     getProfile: () => api.get('/api/users/profile'),
     createUser: (data) => api.post('/api/users/create', data),
-    updateUserRole: (id, data) => api.patch(`/api/users/${id}/role`, data),
+    updateUser: (id, data) => api.patch(`/api/users/${id}`, data),
+    updateUserRole: (id, data) => api.patch(`/api/users/${id}`, data),
     deleteUser: (id) => api.delete(`/api/users/${id}`),
 };
 

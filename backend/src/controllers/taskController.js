@@ -35,15 +35,20 @@ const createTask = asyncHandler(async (req, res) => {
 });
 
 const listTask = asyncHandler(async (req, res) => {
-  // only owner or admin
-  if (req.user.role !== "owner" && req.user.role !== "admin") {
-    res.status(403);
-    throw new Error("Only owner or admin can view all tasks");
-  }
+  let tasks;
 
-  const tasks = await Task.find({
-    workspaceId: req.user.workspaceId,
-  });
+  // Owner/Admin can see all tasks in workspace
+  if (req.user.role === "owner" || req.user.role === "admin") {
+    tasks = await Task.find({
+      workspaceId: req.user.workspaceId,
+    });
+  } else {
+    // Member can only see tasks assigned to them
+    tasks = await Task.find({
+      workspaceId: req.user.workspaceId,
+      assignedTo: req.user._id,
+    });
+  }
 
   res.status(200).json(tasks);
 });

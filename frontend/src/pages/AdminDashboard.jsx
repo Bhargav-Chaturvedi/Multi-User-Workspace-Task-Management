@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { userAPI, taskAPI } from '../api/axios';
 import Navbar from '../components/Navbar';
 import WorkspaceInfo from '../components/WorkspaceInfo';
@@ -7,10 +6,10 @@ import TaskList from '../components/TaskList';
 import TaskForm from '../components/TaskForm';
 import UserList from '../components/UserList';
 import UserForm from '../components/UserForm';
+import EditUserForm from '../components/EditUserForm';
 import ErrorMessage from '../components/ErrorMessage';
 
 const AdminDashboard = () => {
-    const { user } = useAuth();
 
     // State
     const [users, setUsers] = useState([]);
@@ -24,6 +23,8 @@ const AdminDashboard = () => {
     // Modal states
     const [showTaskForm, setShowTaskForm] = useState(false);
     const [showUserForm, setShowUserForm] = useState(false);
+    const [showEditUserForm, setShowEditUserForm] = useState(false);
+    const [editingUser, setEditingUser] = useState(null);
 
     // Active tab
     const [activeTab, setActiveTab] = useState('tasks');
@@ -117,6 +118,25 @@ const AdminDashboard = () => {
             setTimeout(() => setSuccess(''), 3000);
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to delete user');
+        }
+    };
+
+    const handleEditUser = (user) => {
+        setEditingUser(user);
+        setShowEditUserForm(true);
+    };
+
+    const handleUpdateUser = async (userData) => {
+        if (!editingUser) return;
+        try {
+            await userAPI.updateUser(editingUser._id, userData);
+            setShowEditUserForm(false);
+            setEditingUser(null);
+            setSuccess('User updated successfully!');
+            fetchUsers();
+            setTimeout(() => setSuccess(''), 3000);
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to update user');
         }
     };
 
@@ -224,6 +244,7 @@ const AdminDashboard = () => {
                             users={users}
                             loading={loadingUsers}
                             onDeleteUser={handleDeleteUser}
+                            onEditUser={handleEditUser}
                             showRoleChange={false}
                         />
                     </div>
@@ -243,6 +264,19 @@ const AdminDashboard = () => {
                     <UserForm
                         onSubmit={handleCreateUser}
                         onCancel={() => setShowUserForm(false)}
+                    />
+                )}
+
+                {/* Edit User Form Modal */}
+                {showEditUserForm && editingUser && (
+                    <EditUserForm
+                        user={editingUser}
+                        onSubmit={handleUpdateUser}
+                        onCancel={() => {
+                            setShowEditUserForm(false);
+                            setEditingUser(null);
+                        }}
+                        isOwner={false}
                     />
                 )}
             </div>

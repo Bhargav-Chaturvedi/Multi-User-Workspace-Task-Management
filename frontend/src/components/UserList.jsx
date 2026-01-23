@@ -1,7 +1,7 @@
 import { useAuth } from '../context/AuthContext';
 import LoadingSpinner from './LoadingSpinner';
 
-const UserList = ({ users, loading, onChangeRole, onDeleteUser, showRoleChange = true }) => {
+const UserList = ({ users, loading, onChangeRole, onDeleteUser, onEditUser, showRoleChange = true }) => {
     const { isOwner, user: currentUser } = useAuth();
 
     const getRoleBadgeClass = (role) => {
@@ -65,7 +65,7 @@ const UserList = ({ users, loading, onChangeRole, onDeleteUser, showRoleChange =
                             <tr key={user._id} className="fade-in">
                                 <td>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
+                                        <div className="w-9 h-9 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
                                             {user.username?.charAt(0).toUpperCase()}
                                         </div>
                                         <p className="font-medium text-white">{user.username}</p>
@@ -88,7 +88,28 @@ const UserList = ({ users, loading, onChangeRole, onDeleteUser, showRoleChange =
                                             {/* Role Change - Not for owner role users, or current user */}
                                             {user.role !== 'owner' && currentUser && user._id !== currentUser.id && (
                                                 <>
-                                                    {/* Change Role Button */}
+                                                    {/* Edit Button */}
+                                                    <button
+                                                        onClick={() => onEditUser(user)}
+                                                        className="p-2 rounded-lg bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors"
+                                                        title="Edit User"
+                                                    >
+                                                        <svg
+                                                            className="w-4 h-4"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth={2}
+                                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                                            />
+                                                        </svg>
+                                                    </button>
+
+                                                    {/* Change Role Button - Only for Owner */}
                                                     {isOwner && (
                                                         <select
                                                             value={user.role}

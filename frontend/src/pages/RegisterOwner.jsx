@@ -56,13 +56,13 @@ const RegisterOwner = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4">
-            <div className="w-full max-w-md">
-                {/* Logo */}
-                <div className="text-center mb-8">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+        <div className="min-h-screen flex items-center justify-center p-6 py-12">
+            <div className="auth-container">
+                {/* Header with Logo */}
+                <div className="auth-header">
+                    <div className="auth-logo mx-auto mb-6">
                         <svg
-                            className="w-10 h-10 text-white"
+                            className="w-7 h-7 text-white"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -75,12 +75,12 @@ const RegisterOwner = () => {
                             />
                         </svg>
                     </div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Create Workspace</h1>
-                    <p className="text-slate-400">Register as a workspace owner</p>
+                    <h1 className="text-2xl font-bold text-white mb-2">Create Workspace</h1>
+                    <p className="text-slate-400 text-sm">Register as a workspace owner</p>
                 </div>
 
-                {/* Register Form */}
-                <div className="glass-card p-8 fade-in">
+                {/* Register Form Card */}
+                <div className="auth-card fade-in">
                     <ErrorMessage message={error} onDismiss={() => setError('')} />
 
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -190,12 +190,12 @@ const RegisterOwner = () => {
                         </button>
                     </form>
 
-                    <div className="mt-6 text-center">
-                        <p className="text-slate-400">
+                    <div className="mt-6 pt-6 border-t border-slate-700 text-center">
+                        <p className="text-slate-400 text-sm">
                             Already have an account?{' '}
                             <Link
                                 to="/login"
-                                className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
+                                className="text-teal-400 hover:text-teal-300 font-medium transition-colors"
                             >
                                 Sign In
                             </Link>

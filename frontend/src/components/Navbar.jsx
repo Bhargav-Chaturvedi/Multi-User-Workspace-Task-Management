@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
-    const { user, logout, isOwner, isAdmin } = useAuth();
+    const { user, logout } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -23,13 +23,13 @@ const Navbar = () => {
 
     return (
         <nav className="glass-card mb-6">
-            <div className="max-w-7xl mx-auto px-6 py-4">
+            <div className="max-w-7xl mx-auto px-5 py-4">
                 <div className="flex items-center justify-between">
                     {/* Logo & Brand */}
                     <Link to="/dashboard" className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                        <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center">
                             <svg
-                                className="w-6 h-6 text-white"
+                                className="w-5 h-5 text-white"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -42,21 +42,21 @@ const Navbar = () => {
                                 />
                             </svg>
                         </div>
-                        <span className="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                        <span className="text-lg font-bold text-white">
                             TaskFlow
                         </span>
                     </Link>
 
                     {/* User Info & Actions */}
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-5">
                         {/* User Info */}
                         <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-500 to-slate-700 flex items-center justify-center text-white font-semibold text-sm">
                                 {user?.username?.charAt(0).toUpperCase()}
                             </div>
                             <div className="hidden sm:block">
-                                <p className="text-sm font-medium text-white">{user?.username}</p>
-                                <span className={`badge ${getRoleBadgeClass(user?.role)}`}>
+                                <p className="text-sm font-medium text-white leading-tight">{user?.username}</p>
+                                <span className={`badge ${getRoleBadgeClass(user?.role)} text-xs py-0.5 px-2`}>
                                     {user?.role}
                                 </span>
                             </div>
@@ -65,7 +65,7 @@ const Navbar = () => {
                         {/* Logout Button */}
                         <button
                             onClick={handleLogout}
-                            className="btn-secondary btn-sm flex items-center gap-2"
+                            className="btn-secondary btn-sm flex items-center gap-2 py-2 px-3"
                         >
                             <svg
                                 className="w-4 h-4"
@@ -80,7 +80,7 @@ const Navbar = () => {
                                     d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                                 />
                             </svg>
-                            <span className="hidden sm:inline">Logout</span>
+                            <span className="hidden sm:inline text-sm">Logout</span>
                         </button>
                     </div>
                 </div>
